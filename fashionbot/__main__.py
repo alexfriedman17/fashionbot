@@ -1,5 +1,5 @@
-"""CLI entrypoint placeholder.
+"""CLI entrypoint."""
 
-Planned command:
-    python -m fashionbot check
-"""
+from fashionbot.cli import main
+
+raise SystemExit(main())

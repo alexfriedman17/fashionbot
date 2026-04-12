@@ -16,7 +16,7 @@ This document defines the first scraper implementation for the Fashion Availabil
 
 ## Scraper Runtime
 
-Use Playwright with a headed Chromium browser for the first version.
+For per-site backend choice, use `docs/SITE_CHECKING_STRATEGY.md` as the source of truth. Prefer HTTP or embedded product data when it can prove status faster than a browser, and use Playwright when the site needs JavaScript-rendered controls or safe popup dismissal.
 
 Recommended default behavior:
 
@@ -109,7 +109,8 @@ Initial watched URLs:
 
 Implementation notes:
 
-- Use browser-rendered page checks first.
+- Use HTTP or embedded product data first because bundled Playwright Chromium has rendered Coach pages blank in local testing.
+- Use browser-rendered page checks only as a secondary proof attempt.
 - Extract visible product title, price text, color or variant text, and primary purchase button text.
 - The current watchlist target fields are unknown, so classify only the exact product page, not inferred colors or sizes.
 - If the page shows coming-soon, waitlist, unavailable, or unclear purchase state, return `manual_check` unless sold-out text is explicit.

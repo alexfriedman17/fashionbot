@@ -13,6 +13,7 @@ FashionBot/
     inter-claw-messaging.mermaid
     pipeline-flow.mermaid
   docs/
+    index.html
     PRODUCT_PRD.md
     TECHNICAL_PRD.md
     SCRAPING_APPROACH.md
@@ -51,6 +52,7 @@ FashionBot/
 
 - `watchlist.json`: canonical item state.
 - `watchlist.md`: generated human-readable mirror.
+- `docs/index.html`: generated public GitHub Pages dashboard.
 - `checkout_profile.example.json`: safe checkout-prep schema without raw card data.
 - `blockdiagrams/`: architecture and OpenClaw planning diagrams.
 - `docs/SCRAPING_APPROACH.md`: first-pass browser scraping contract and classification guidance.

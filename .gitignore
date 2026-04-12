@@ -16,3 +16,6 @@ pytest-cache-files-*/
 
 # Local proof artifacts
 screenshots/
+
+# Generated public dashboard artifact
+docs/index.html

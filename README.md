@@ -36,6 +36,12 @@ python -m pytest
 
 `--browser playwright` is the working local backend. `--browser blueprint` is reserved for a future MCP-backed browser flow and reports setup guidance unless Blueprint MCP is registered with the agent host.
 
+## Public Dashboard
+
+`python -m fashionbot check` also generates `docs/index.html`, a static status table suitable for GitHub Pages.
+
+The included `Publish availability dashboard` GitHub Actions workflow runs every 30 minutes and can also be started manually from the Actions tab. Configure Pages to use GitHub Actions as the build and deployment source, then the workflow will publish the generated `docs/` artifact after each successful check.
+
 ## Source Of Truth
 
 `watchlist.json` is canonical. `watchlist.md` is a generated human-readable mirror and should not be manually edited once the app exists.

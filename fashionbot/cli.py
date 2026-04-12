@@ -8,12 +8,14 @@ from pathlib import Path
 from fashionbot.checker import BrowserBackendUnavailable, check_watchlist
 from fashionbot.config import (
     DEFAULT_BROWSER_BACKEND,
+    DEFAULT_DASHBOARD_PATH,
     DEFAULT_MARKDOWN_PATH,
     DEFAULT_PROFILE_DIR,
     DEFAULT_TIMEOUT_MS,
     DEFAULT_TIMEZONE,
     DEFAULT_WATCHLIST_PATH,
 )
+from fashionbot.dashboard import render_dashboard_html
 from fashionbot.markdown import render_watchlist_markdown
 from fashionbot.reporting import render_summary
 from fashionbot.storage import load_watchlist, save_watchlist
@@ -26,14 +28,16 @@ def build_parser() -> argparse.ArgumentParser:
     check_parser = subparsers.add_parser("check", help="Check watchlist availability")
     check_parser.add_argument("--watchlist", default=DEFAULT_WATCHLIST_PATH, help="Path to watchlist JSON")
     check_parser.add_argument("--markdown", default=DEFAULT_MARKDOWN_PATH, help="Path to markdown mirror")
+    check_parser.add_argument("--dashboard", default=DEFAULT_DASHBOARD_PATH, help="Path to generated HTML dashboard")
     check_parser.add_argument("--browser", default=DEFAULT_BROWSER_BACKEND, choices=("playwright", "blueprint"), help="Browser backend")
     check_parser.add_argument("--headless", action="store_true", help="Run Playwright headless")
     check_parser.add_argument("--profile-dir", default=DEFAULT_PROFILE_DIR, help="Persistent browser profile directory")
     check_parser.add_argument("--timeout-ms", type=int, default=DEFAULT_TIMEOUT_MS, help="Per-page timeout in milliseconds")
     check_parser.add_argument("--timezone", default=DEFAULT_TIMEZONE, help="IANA timezone for timestamps")
     check_parser.add_argument("--recap", action="store_true", help="Print all statuses instead of only changes")
-    check_parser.add_argument("--dry-run", action="store_true", help="Do not write watchlist or markdown updates")
+    check_parser.add_argument("--dry-run", action="store_true", help="Do not write watchlist or generated file updates")
     check_parser.add_argument("--no-markdown", action="store_true", help="Do not regenerate watchlist.md")
+    check_parser.add_argument("--no-dashboard", action="store_true", help="Do not regenerate the HTML dashboard")
     check_parser.set_defaults(func=run_check)
     return parser
 
@@ -57,6 +61,10 @@ def run_check(args: argparse.Namespace) -> int:
         save_watchlist(data, args.watchlist)
         if not args.no_markdown:
             Path(args.markdown).write_text(render_watchlist_markdown(data), encoding="utf-8")
+        if not args.no_dashboard:
+            dashboard_path = Path(args.dashboard)
+            dashboard_path.parent.mkdir(parents=True, exist_ok=True)
+            dashboard_path.write_text(render_dashboard_html(data), encoding="utf-8")
 
     print(render_summary(results, recap=args.recap))
     return 0

@@ -1,0 +1,1 @@
+"""Markdown mirror generation placeholder."""

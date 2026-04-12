@@ -1,0 +1,1 @@
+"""Generic source extraction placeholder."""

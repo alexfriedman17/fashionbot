@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "items": [
+    {
+      "id": "topologie-bomber-strap",
+      "brand": "Topologie",
+      "product": "Bomber Strap",
+      "variant": "Any",
+      "price_target": 75,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://topologie.com/products/bomber-strap",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Seeded target. Check exact original vendor page only.",
+      "original_vendor_urls": [
+        {
+          "label": "Product page",
+          "url": "https://topologie.com/products/bomber-strap"
+        }
+      ]
+    },
+    {
+      "id": "topologie-scrunchie-pocket-wrist",
+      "brand": "Topologie",
+      "product": "Scrunchie Pocket Wrist",
+      "variant": "Any",
+      "price_target": 82,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://topologie.com/products/scrunchie-pocket-wrist",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Seeded target. Check exact original vendor page only.",
+      "original_vendor_urls": [
+        {
+          "label": "Product page",
+          "url": "https://topologie.com/products/scrunchie-pocket-wrist"
+        }
+      ]
+    },
+    {
+      "id": "topologie-bungee-wrist-strap",
+      "brand": "Topologie",
+      "product": "Bungee Wrist Strap",
+      "variant": "Sleet (Tech Sateen) OR Mint (Tech Sateen)",
+      "price_target": 45,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://topologie.com/products/bungee-wrist-strap-sleet-tech-sateen",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Treat as one watch item. Either Sleet or Mint satisfies the target if explicit availability is shown.",
+      "original_vendor_urls": [
+        {
+          "label": "Sleet (Tech Sateen)",
+          "url": "https://topologie.com/products/bungee-wrist-strap-sleet-tech-sateen"
+        },
+        {
+          "label": "Mint (Tech Sateen)",
+          "url": "https://topologie.com/products/bungee-wrist-strap?_pos=1&_sid=4759fef48&_ss=r&variant=44881325981869"
+        }
+      ]
+    },
+    {
+      "id": "coach-small-slouchy-patchwork",
+      "brand": "Coachtopia / Coach",
+      "product": "Small Slouchy Shoulder Bag In Upcrafted Patchwork",
+      "variant": "Unknown",
+      "price_target": null,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://www.coach.com/products/coachtopia/small-slouchy-shoulder-bag-in-upcrafted-patchwork/CFF99-Z6Q.html",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Target fields unknown. Do not infer missing variant, size, or price target.",
+      "original_vendor_urls": [
+        {
+          "label": "Product page",
+          "url": "https://www.coach.com/products/coachtopia/small-slouchy-shoulder-bag-in-upcrafted-patchwork/CFF99-Z6Q.html"
+        }
+      ]
+    },
+    {
+      "id": "coach-alterego-slouchy-leather",
+      "brand": "Coachtopia / Coach",
+      "product": "Alter/Ego Slouchy Shoulder Bag In Upcrafted Leather",
+      "variant": "Unknown",
+      "price_target": null,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://www.coach.com/products/coachtopia/alterego-slouchy-shoulder-bag-in-upcrafted-leather/CBE00.html",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Target fields unknown. Do not infer missing variant, size, or price target.",
+      "original_vendor_urls": [
+        {
+          "label": "Product page",
+          "url": "https://www.coach.com/products/coachtopia/alterego-slouchy-shoulder-bag-in-upcrafted-leather/CBE00.html"
+        }
+      ]
+    }
+  ]
+}

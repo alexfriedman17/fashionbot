@@ -1,0 +1,1 @@
+"""Availability classification placeholder."""

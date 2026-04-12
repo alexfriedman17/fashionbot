@@ -1,0 +1,1 @@
+"""Playwright checker orchestration placeholder."""

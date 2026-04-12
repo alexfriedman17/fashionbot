@@ -25,7 +25,7 @@ This file is generated from `watchlist.json` by the CLI. Edit the JSON source of
 - Price target: Unknown
 - Current status: manual_check
 - Last checked: 2026-04-12T17:09:22-04:00
-- Original vendor URL: https://www.coach.com/products/coachtopia/small-slouchy-shoulder-bag-in-upcrafted-patchwork/CFF99-Z6Q.html
+- Original vendor URL: https://www.coach.com/products/coachtopia/small-slouchy-shoulder-bag-in-upcrafted-patchwork/CFF99.html
 - Notes: Product page: No explicit purchase or sold-out signal found.
 
 ### Coachtopia / Coach - Alter/Ego Slouchy Shoulder Bag In Upcrafted Leather
@@ -67,5 +67,5 @@ This file is generated from `watchlist.json` by the CLI. Edit the JSON source of
 - Price target: Unknown
 - Current status: sold_out
 - Last checked: 2026-04-12T17:09:22-04:00
-- Original vendor URL: https://www.lego.com/en-us/product/brick-clog-5010203
+- Original vendor URL: https://www.lego.com/en-us/product/brick-clog-5010203?age-gate=grown_up
 - Notes: All checked URLs are explicitly sold out.

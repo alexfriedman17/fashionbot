@@ -109,6 +109,27 @@
           "url": "https://www.coach.com/products/coachtopia/alterego-slouchy-shoulder-bag-in-upcrafted-leather/CBE00.html"
         }
       ]
+    },
+    {
+      "id": "lego-brick-clog",
+      "brand": "LEGO",
+      "product": "Brick Clog",
+      "variant": "M8 OR M9 OR M10",
+      "price_target": null,
+      "price_available": null,
+      "original_vendor_availability": "manual_check",
+      "original_price": null,
+      "link_to_suggested_purchase": "https://www.lego.com/en-us/product/brick-clog-5010203",
+      "size_available": null,
+      "color_available": null,
+      "last_checked": null,
+      "notes": "Target sizes: M8, M9, or M10 only. Do not count availability for other sizes.",
+      "original_vendor_urls": [
+        {
+          "label": "Product page",
+          "url": "https://www.lego.com/en-us/product/brick-clog-5010203"
+        }
+      ]
     }
   ]
 }

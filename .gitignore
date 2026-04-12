@@ -1,0 +1,12 @@
+# Local secrets and private checkout details
+checkout_profile.local.json
+.env
+
+# Browser/session state
+.browser-profile/
+playwright/.auth/
+
+# Python/runtime artifacts
+__pycache__/
+.pytest_cache/
+.venv/

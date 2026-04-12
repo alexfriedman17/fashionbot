@@ -45,3 +45,11 @@ This file is a human-readable mirror of `watchlist.json`. Once the checker exist
 - Price target: Unknown
 - Original vendor URL: https://www.coach.com/products/coachtopia/alterego-slouchy-shoulder-bag-in-upcrafted-leather/CBE00.html
 - Notes: Target fields unknown. Do not infer missing variant, size, or price target.
+
+### LEGO - Brick Clog
+
+- Variant target: M8 OR M9 OR M10
+- Size target: M8, M9, or M10 only
+- Price target: Unknown
+- Original vendor URL: https://www.lego.com/en-us/product/brick-clog-5010203
+- Notes: Target sizes: M8, M9, or M10 only. Do not count availability for other sizes.

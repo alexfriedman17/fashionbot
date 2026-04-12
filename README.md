@@ -92,7 +92,7 @@ fashionbot/
 │       ├── architecture-figma.png     ← Visual architecture diagram
 │       └── system-architecture.mermaid
 │
-├── blockdiagrams/                     ← Pipeline flow diagrams (Mermaid)
+├── diagrams/                          ← Architecture diagrams (Mermaid + SVG + HTML + PNG)
 ├── docs/                              ← Technical documentation
 │   ├── PRODUCT_PRD.md
 │   ├── TECHNICAL_PRD.md

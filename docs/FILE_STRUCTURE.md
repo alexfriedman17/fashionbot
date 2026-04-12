@@ -9,6 +9,7 @@ FashionBot/
   docs/
     PRODUCT_PRD.md
     TECHNICAL_PRD.md
+    SCRAPING_APPROACH.md
     FILE_STRUCTURE.md
   fashionbot/
     __init__.py
@@ -41,6 +42,7 @@ FashionBot/
 
 - `watchlist.json`: canonical item state.
 - `watchlist.md`: generated human-readable mirror.
+- `docs/SCRAPING_APPROACH.md`: first-pass browser scraping contract and classification guidance.
 - `fashionbot/cli.py`: command parsing and top-level run flow.
 - `fashionbot/models.py`: typed watchlist and check-result models.
 - `fashionbot/storage.py`: JSON load/save and validation.

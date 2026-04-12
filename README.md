@@ -17,6 +17,7 @@ The first version checks exact original-vendor product URLs, stores structured s
 
 - `docs/PRODUCT_PRD.md`: product behavior and success criteria.
 - `docs/TECHNICAL_PRD.md`: implementation approach and constraints.
+- `docs/SCRAPING_APPROACH.md`: first-pass scraper contract, classification rules, and site notes.
 - `docs/FILE_STRUCTURE.md`: proposed file tree and responsibilities.
 
 ## Proposed Commands

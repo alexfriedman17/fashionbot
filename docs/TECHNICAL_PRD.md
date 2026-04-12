@@ -49,6 +49,8 @@ Recommended item fields:
 
 ## Check Pipeline
 
+Detailed scraper rules live in `docs/SCRAPING_APPROACH.md`.
+
 1. Load and validate `watchlist.json`.
 2. Open each exact original vendor URL with Playwright.
 3. Wait for visible product-page content.

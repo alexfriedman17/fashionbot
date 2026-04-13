@@ -1,0 +1,21 @@
+# Local secrets and private checkout details
+checkout_profile.local.json
+.env
+
+# Browser/session state
+.browser-profile/
+.chrome-playwright-profile/
+playwright/.auth/
+
+# Python/runtime artifacts
+__pycache__/
+.pytest_cache/
+.venv/
+*.egg-info/
+pytest-cache-files-*/
+
+# Local proof artifacts
+screenshots/
+
+# Generated public dashboard artifact
+docs/index.html

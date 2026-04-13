@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Resale Claws - MVP Plan</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #0a0a0f;
+    color: #e2e8f0;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    padding: 40px 60px;
+    border-bottom: 1px solid rgba(108, 92, 231, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(108, 92, 231, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .header h1 {
+    font-size: 2.2rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #a29bfe, #6c5ce7, #74b9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+  .header .subtitle {
+    font-size: 1rem;
+    color: #94a3b8;
+    font-weight: 400;
+  }
+  .header .team {
+    margin-top: 12px;
+    display: flex;
+    gap: 12px;
+  }
+  .header .team span {
+    background: rgba(108, 92, 231, 0.2);
+    border: 1px solid rgba(108, 92, 231, 0.3);
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: #a29bfe;
+  }
+
+  /* Navigation */
+  .nav {
+    background: #12121a;
+    padding: 0 60px;
+    display: flex;
+    gap: 0;
+    border-bottom: 1px solid #1e1e2e;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .nav button {
+    background: none;
+    border: none;
+    color: #64748b;
+    padding: 16px 24px;
+    font-size: 0.9rem;
+    font-family: inherit;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+  }
+  .nav button:hover { color: #a29bfe; }
+  .nav button.active {
+    color: #a29bfe;
+    border-bottom-color: #6c5ce7;
+  }
+
+  /* Content */
+  .content { padding: 40px 60px; max-width: 1400px; margin: 0 auto; }
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* Architecture Diagram */
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .pipeline-flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    padding: 30px;
+    background: linear-gradient(135deg, #12121a, #1a1a2e);
+    border-radius: 16px;
+    border: 1px solid #1e1e2e;
+    margin-bottom: 32px;
+  }
+  .claw-node {
+    background: linear-gradient(135deg, var(--claw-color-dark), var(--claw-color));
+    border: 1px solid var(--claw-color);
+    border-radius: 12px;
+    padding: 16px 20px;
+    min-width: 140px;
+    text-align: center;
+    position: relative;
+  }
+  .claw-node .icon { font-size: 1.5rem; margin-bottom: 4px; }
+  .claw-node .name { font-weight: 600; font-size: 0.85rem; }
+  .claw-node .role { font-size: 0.7rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .arrow {
+    font-size: 1.5rem;
+    color: #4a5568;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Claw Cards */
+  .claw-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .claw-card {
+    background: #12121a;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    transition: all 0.3s;
+    cursor: pointer;
+    border-left: 4px solid var(--claw-color);
+  }
+  .claw-card:hover {
+    border-color: var(--claw-color);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  }
+  .claw-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .claw-card .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.3rem;
+    background: rgba(108, 92, 231, 0.15);
+  }
+  .claw-card h3 { font-size: 1.1rem; font-weight: 700; }
+  .claw-card .phase-badge {
+    margin-left: auto;
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 600;
+  }
+  .badge-mvp { background: rgba(0, 206, 201, 0.2); color: #00cec9; }
+  .badge-p2 { background: rgba(253, 203, 110, 0.2); color: #fdcb6e; }
+  .claw-card .tasks { list-style: none; margin-top: 12px; }
+  .claw-card .tasks li {
+    padding: 6px 0;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .claw-card .tasks li::before {
+    content: '→';
+    color: var(--claw-color);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .claw-card .tools {
+    margin-top: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .claw-card .tools span {
+    font-size: 0.7rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #94a3b8;
+  }
+
+  /* Message Bus Visual */
+  .bus-diagram {
+    background: linear-gradient(135deg, #12121a, #1a1a2e);
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 32px;
+    margin-top: 24px;
+  }
+  .bus-channels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .bus-channel {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+    border-radius: 10px;
+    padding: 16px;
+  }
+  .bus-channel .ch-name {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: #a29bfe;
+    margin-bottom: 6px;
+  }
+  .bus-channel .ch-desc {
+    font-size: 0.75rem;
+    color: #64748b;
+  }
+  .bus-channel .ch-flow {
+    margin-top: 8px;
+    font-size: 0.75rem;
+    color: #00cec9;
+  }
+
+  /* Timeline */
+  .timeline { margin-top: 24px; }
+  .timeline-hour {
+    background: #12121a;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 20px;
+    position: relative;
+    border-left: 4px solid;
+  }
+  .timeline-hour::before {
+    content: '';
+    position: absolute;
+    left: -12px;
+    top: 32px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid;
+    background: #0a0a0f;
+  }
+  .hour-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .hour-header h3 { font-size: 1.1rem; font-weight: 700; }
+  .hour-header .time {
+    font-size: 0.85rem;
+    padding: 4px 12px;
+    border-radius: 8px;
+    background: rgba(108, 92, 231, 0.15);
+    color: #a29bfe;
+  }
+  .hour-tasks {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .hour-task {
+    background: rgba(0,0,0,0.3);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .hour-task .owner {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .hour-task .task-desc {
+    font-size: 0.8rem;
+    color: #94a3b8;
+  }
+  .owner-quilee { color: #a29bfe; }
+  .owner-alex { color: #00cec9; }
+  .owner-zeev { color: #fdcb6e; }
+
+  /* APIs Table */
+  .api-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 24px;
+    background: #12121a;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid #1e1e2e;
+  }
+  .api-table th {
+    background: #1a1a2e;
+    padding: 14px 20px;
+    text-align: left;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #64748b;
+  }
+  .api-table td {
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    border-top: 1px solid #1e1e2e;
+  }
+  .api-table tr:hover td { background: rgba(108, 92, 231, 0.05); }
+  .priority-mvp { color: #00cec9; font-weight: 600; }
+  .priority-p2 { color: #fdcb6e; }
+  .priority-p3 { color: #e17055; }
+
+  /* Section headers */
+  .section-header {
+    margin-bottom: 8px;
+  }
+  .section-header h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .section-header p {
+    color: #64748b;
+    font-size: 0.9rem;
+  }
+
+  /* Cost estimate */
+  .cost-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 24px;
+  }
+  .cost-card {
+    background: #12121a;
+    border: 1px solid #1e1e2e;
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+  .cost-card .phase-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 8px;
+  }
+  .cost-card .amount {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+  .cost-card .period {
+    font-size: 0.8rem;
+    color: #64748b;
+    margin-top: 4px;
+  }
+
+  /* Expandable details */
+  .expand-toggle {
+    background: none;
+    border: 1px solid rgba(108,92,231,0.3);
+    color: #a29bfe;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    margin-top: 12px;
+    font-family: inherit;
+  }
+  .expand-toggle:hover { background: rgba(108,92,231,0.1); }
+  .expandable { display: none; margin-top: 12px; }
+  .expandable.open { display: block; }
+
+  /* Demo script */
+  .demo-box {
+    background: linear-gradient(135deg, rgba(108,92,231,0.1), rgba(0,206,201,0.1));
+    border: 1px solid rgba(108,92,231,0.3);
+    border-radius: 16px;
+    padding: 28px;
+    margin-top: 24px;
+  }
+  .demo-step {
+    display: flex;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .demo-step:last-child { border-bottom: none; }
+  .demo-step .step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(108,92,231,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #a29bfe;
+    flex-shrink: 0;
+  }
+  .demo-step .step-text { font-size: 0.9rem; color: #cbd5e1; }
+
+  @media (max-width: 768px) {
+    .content { padding: 20px; }
+    .header { padding: 24px 20px; }
+    .nav { padding: 0 20px; overflow-x: auto; }
+    .hour-tasks { grid-template-columns: 1fr; }
+    .claw-cards { grid-template-columns: 1fr; }
+    .cost-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Fashion Resale Claws</h1>
+  <p class="subtitle">Autonomous agent pipeline for sourcing, buying, and reselling fashion items</p>
+  <div class="team">
+    <span>Alex</span>
+    <span>Ze'ev</span>
+    <span>Quilee</span>
+  </div>
+</div>
+
+<div class="nav">
+  <button class="active" onclick="showSection('architecture')">Architecture</button>
+  <button onclick="showSection('claws')">Claws</button>
+  <button onclick="showSection('messaging')">Message Bus</button>
+  <button onclick="showSection('timeline')">Timeline</button>
+  <button onclick="showSection('apis')">APIs & Tools</button>
+  <button onclick="showSection('demo')">Demo Script</button>
+</div>
+
+<div class="content">
+
+  <!-- ARCHITECTURE SECTION -->
+  <div id="architecture" class="section active">
+    <div class="section-header">
+      <h2>System Architecture</h2>
+      <p>Five autonomous claws connected via a Telegram-based message bus</p>
+    </div>
+
+    <div class="pipeline-flow">
+      <div class="claw-node" style="--claw-color: #e17055; --claw-color-dark: #2d1b14;">
+        <div class="icon">🔍</div>
+        <div class="name">Research</div>
+        <div class="role">Curate items</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="claw-node" style="--claw-color: #fdcb6e; --claw-color-dark: #2d2814;">
+        <div class="icon">🕷️</div>
+        <div class="name">Scraper</div>
+        <div class="role">Check availability</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="claw-node" style="--claw-color: #d63031; --claw-color-dark: #2d1414;">
+        <div class="icon">💰</div>
+        <div class="name">Buyer</div>
+        <div class="role">Purchase items</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="claw-node" style="--claw-color: #6c5ce7; --claw-color-dark: #1a1430;">
+        <div class="icon">📦</div>
+        <div class="name">Seller</div>
+        <div class="role">List & negotiate</div>
+      </div>
+      <div style="width: 100%; display: flex; justify-content: center; margin-top: 16px;">
+        <div class="arrow" style="transform: rotate(90deg);">↕</div>
+      </div>
+      <div class="claw-node" style="--claw-color: #00cec9; --claw-color-dark: #0a2e2d; width: 300px;">
+        <div class="icon">🗣️</div>
+        <div class="name">Communication Claw</div>
+        <div class="role">Message bus · Alerts · Reports · User commands</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <h2>Data Flow</h2>
+      <p>Structured JSON payloads pass between claws at each stage</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 20px;">
+      <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px; border-top: 3px solid #e17055;">
+        <div style="font-size: 0.7rem; color: #e17055; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Stage 1</div>
+        <div style="font-weight: 600; margin: 6px 0;">item_list.json</div>
+        <div style="font-size: 0.75rem; color: #64748b;">10 validated items with URLs, preferences, alternatives</div>
+      </div>
+      <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px; border-top: 3px solid #fdcb6e;">
+        <div style="font-size: 0.7rem; color: #fdcb6e; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Stage 2</div>
+        <div style="font-weight: 600; margin: 6px 0;">available_items.json</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Availability, price, screenshots, status changes</div>
+      </div>
+      <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px; border-top: 3px solid #d63031;">
+        <div style="font-size: 0.7rem; color: #d63031; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Stage 3</div>
+        <div style="font-weight: 600; margin: 6px 0;">purchased_items.json</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Order IDs, tracking numbers, costs, inventory records</div>
+      </div>
+      <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px; border-top: 3px solid #6c5ce7;">
+        <div style="font-size: 0.7rem; color: #6c5ce7; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Stage 4</div>
+        <div style="font-weight: 600; margin: 6px 0;">sale_updates.json</div>
+        <div style="font-size: 0.75rem; color: #64748b;">Listings, offers, sales, profit tracking</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CLAWS SECTION -->
+  <div id="claws" class="section">
+    <div class="section-header">
+      <h2>The Five Claws</h2>
+      <p>Each claw is a Maritime agent with a specific role in the pipeline</p>
+    </div>
+
+    <div class="claw-cards">
+      <div class="claw-card" style="--claw-color: #00cec9;">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(0,206,201,0.15);">🗣️</div>
+          <h3>Communication Claw</h3>
+          <span class="phase-badge badge-mvp">MVP</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8;">The nervous system — routes messages between all claws and interfaces with the team via Telegram.</p>
+        <ul class="tasks">
+          <li>Route inter-claw messages via Telegram channels</li>
+          <li>Send status alerts and availability notifications</li>
+          <li>Parse user commands (/status, /approve, /scrape)</li>
+          <li>Compile daily summary reports with P&L</li>
+          <li>Manage alert priority levels (critical/high/normal)</li>
+        </ul>
+        <div class="tools">
+          <span>Telegram Bot API</span>
+          <span>Webhook Router</span>
+          <span>DB Read</span>
+        </div>
+      </div>
+
+      <div class="claw-card" style="--claw-color: #e17055;">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(225,112,85,0.15);">🔍</div>
+          <h3>Research Claw</h3>
+          <span class="phase-badge badge-mvp">MVP</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Curates and validates item lists — confirms links, colors, sizes, and suggests trending alternatives.</p>
+        <ul class="tasks">
+          <li>Receive manual item list from user (up to 10 items)</li>
+          <li>Validate links (reject eBay, verify reachability)</li>
+          <li>Confirm color/size options match preferences</li>
+          <li>Suggest similar trending items as alternatives</li>
+          <li>Hand off validated item_list.json to Scraper</li>
+        </ul>
+        <div class="tools">
+          <span>Web Search</span>
+          <span>HTTP Client</span>
+          <span>Message Bus</span>
+        </div>
+      </div>
+
+      <div class="claw-card" style="--claw-color: #fdcb6e;">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(253,203,110,0.15);">🕷️</div>
+          <h3>Scraper Claw</h3>
+          <span class="phase-badge badge-mvp">MVP</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8;">The monitoring engine — continuously checks availability, price, and proves it with screenshots.</p>
+        <ul class="tasks">
+          <li>Check item availability via headless browser</li>
+          <li>Extract current price and size matrix</li>
+          <li>Take screenshot proof of each check</li>
+          <li>Detect status changes (unavailable → available)</li>
+          <li>Anti-bot evasion: proxy rotation, user-agent spoofing</li>
+          <li>Compile reports, hand off to Buyer Claw</li>
+        </ul>
+        <div class="tools">
+          <span>Playwright</span>
+          <span>ScraperAPI</span>
+          <span>Cloudflare R2</span>
+          <span>2Captcha</span>
+        </div>
+      </div>
+
+      <div class="claw-card" style="--claw-color: #d63031;">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(214,48,49,0.15);">💰</div>
+          <h3>Buyer Claw</h3>
+          <span class="phase-badge badge-p2">Phase 2</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8;">The purchasing engine — executes checkouts, manages shipping, and maintains the inventory database.</p>
+        <ul class="tasks">
+          <li>Receive available items from Scraper</li>
+          <li>Get purchase approval (or auto-buy)</li>
+          <li>Execute checkout with stored payment</li>
+          <li>Set shipping to team address</li>
+          <li>Record purchases in inventory DB</li>
+          <li>Hand off to Seller Claw</li>
+        </ul>
+        <div class="tools">
+          <span>Playwright</span>
+          <span>Stripe API</span>
+          <span>Supabase</span>
+          <span>Message Bus</span>
+        </div>
+      </div>
+
+      <div class="claw-card" style="--claw-color: #6c5ce7;">
+        <div class="card-header">
+          <div class="card-icon" style="background: rgba(108,92,231,0.15);">📦</div>
+          <h3>Seller Claw</h3>
+          <span class="phase-badge badge-p2">Phase 2</span>
+        </div>
+        <p style="font-size: 0.85rem; color: #94a3b8;">The revenue engine — lists on Poshmark, negotiates offers, and tracks profit.</p>
+        <ul class="tasks">
+          <li>Calculate optimal resale pricing</li>
+          <li>Create Poshmark listings via PrimeLister</li>
+          <li>Monitor and respond to offers automatically</li>
+          <li>Coordinate shipping address changes</li>
+          <li>Track inventory status and profit margins</li>
+        </ul>
+        <div class="tools">
+          <span>PrimeLister</span>
+          <span>Poshmark API</span>
+          <span>Supabase</span>
+          <span>Message Bus</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MESSAGING SECTION -->
+  <div id="messaging" class="section">
+    <div class="section-header">
+      <h2>Inter-Claw Message Bus</h2>
+      <p>Telegram serves as both the user interface and the backbone for claw-to-claw communication</p>
+    </div>
+
+    <div class="bus-diagram">
+      <h3 style="font-size: 1rem; margin-bottom: 4px;">Telegram Channel Structure</h3>
+      <p style="font-size: 0.8rem; color: #64748b;">Each pipeline stage has a dedicated channel carrying structured JSON payloads</p>
+
+      <div class="bus-channels">
+        <div class="bus-channel">
+          <div class="ch-name">#team-chat</div>
+          <div class="ch-desc">Human-readable updates, alerts, and reports</div>
+          <div class="ch-flow">All Claws → Team</div>
+        </div>
+        <div class="bus-channel">
+          <div class="ch-name">#research-scraper</div>
+          <div class="ch-desc">Validated item lists with URLs and preferences</div>
+          <div class="ch-flow">Research → Scraper</div>
+        </div>
+        <div class="bus-channel">
+          <div class="ch-name">#scraper-buyer</div>
+          <div class="ch-desc">Available items + price + screenshot proofs</div>
+          <div class="ch-flow">Scraper → Buyer</div>
+        </div>
+        <div class="bus-channel">
+          <div class="ch-name">#buyer-seller</div>
+          <div class="ch-desc">Purchased items + tracking + cost data</div>
+          <div class="ch-flow">Buyer → Seller</div>
+        </div>
+        <div class="bus-channel">
+          <div class="ch-name">#status-log</div>
+          <div class="ch-desc">All status updates from every claw</div>
+          <div class="ch-flow">All → Comms Claw</div>
+        </div>
+        <div class="bus-channel">
+          <div class="ch-name">#commands</div>
+          <div class="ch-desc">User commands parsed and routed to target claw</div>
+          <div class="ch-flow">User → Target Claw</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <h3 style="font-size: 1rem; margin-bottom: 16px;">User Commands</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px;">
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/status</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Current pipeline status</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/scrape</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Trigger immediate scrape</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/approve [ids]</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Approve purchase</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/report</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Full summary report</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/inventory</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Show inventory status</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/price [id] [amt]</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Adjust resale price</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/add [url]</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Add item to watch list</span>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px;">
+          <code style="color: #00cec9;">/profit</code>
+          <span style="font-size: 0.8rem; color: #64748b; margin-left: 8px;">Show P&L summary</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE SECTION -->
+  <div id="timeline" class="section">
+    <div class="section-header">
+      <h2>MVP Build Timeline</h2>
+      <p>4-hour sprint to get Research + Scraper + Comms working end-to-end</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-hour" style="border-left-color: #6c5ce7;">
+        <div style="position: absolute; left: -12px; top: 32px; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #6c5ce7; background: #0a0a0f;"></div>
+        <div class="hour-header">
+          <h3>Hour 1: Foundation</h3>
+          <span class="time">12:30 - 1:30 PM</span>
+        </div>
+        <div class="hour-tasks">
+          <div class="hour-task">
+            <div class="owner owner-quilee">Quilee</div>
+            <div class="task-desc">Create Telegram bot via @BotFather. Set up group chat. Get bot token + chat ID.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-alex">Alex</div>
+            <div class="task-desc">Sign up for ScraperAPI + Cloudflare R2. Test proxy with a sample Nike URL.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-zeev">Ze'ev</div>
+            <div class="task-desc">Study Maritime docs. Create Comms Claw agent. Get it sending test messages to Telegram.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-hour" style="border-left-color: #e17055;">
+        <div style="position: absolute; left: -12px; top: 32px; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #e17055; background: #0a0a0f;"></div>
+        <div class="hour-header">
+          <h3>Hour 2: Research + Scraper Claws</h3>
+          <span class="time">1:30 - 2:30 PM</span>
+        </div>
+        <div class="hour-tasks">
+          <div class="hour-task">
+            <div class="owner owner-quilee">Quilee</div>
+            <div class="task-desc">Create Research Claw agent in Maritime. Paste system prompt. Test with sample item list.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-alex">Alex</div>
+            <div class="task-desc">Write Playwright scraping script. Handle Nike.com + Grailed parsers. Add proxy rotation.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-zeev">Ze'ev</div>
+            <div class="task-desc">Set up inter-claw messaging via Telegram channels. Wire Research → Scraper handoff.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-hour" style="border-left-color: #fdcb6e;">
+        <div style="position: absolute; left: -12px; top: 32px; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #fdcb6e; background: #0a0a0f;"></div>
+        <div class="hour-header">
+          <h3>Hour 3: Integration + Screenshots</h3>
+          <span class="time">2:30 - 3:30 PM</span>
+        </div>
+        <div class="hour-tasks">
+          <div class="hour-task">
+            <div class="owner owner-alex">Alex</div>
+            <div class="task-desc">Add screenshot capture to Scraper. Upload to R2. Include URLs in reports.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-zeev">Ze'ev</div>
+            <div class="task-desc">Set up Cloudflare R2 bucket + public URLs. Wire screenshot storage.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-quilee">Quilee</div>
+            <div class="task-desc">Build user command parser in Comms Claw. Handle /status, /scrape, /report.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="timeline-hour" style="border-left-color: #00cec9;">
+        <div style="position: absolute; left: -12px; top: 32px; width: 20px; height: 20px; border-radius: 50%; border: 3px solid #00cec9; background: #0a0a0f;"></div>
+        <div class="hour-header">
+          <h3>Hour 4: Demo Prep</h3>
+          <span class="time">3:30 - 4:30 PM</span>
+        </div>
+        <div class="hour-tasks">
+          <div class="hour-task">
+            <div class="owner owner-quilee">Quilee</div>
+            <div class="task-desc">Curate 5 real items for demo. Fix any UI/messaging bugs.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-alex">Alex</div>
+            <div class="task-desc">Fix scraper edge cases. Test with all 5 demo items. Verify screenshots.</div>
+          </div>
+          <div class="hour-task">
+            <div class="owner owner-zeev">Ze'ev</div>
+            <div class="task-desc">Set up recurring scrape (15 min). Rehearse full demo flow end-to-end.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- APIS SECTION -->
+  <div id="apis" class="section">
+    <div class="section-header">
+      <h2>APIs & Tools</h2>
+      <p>Everything you need to build the pipeline, prioritized by phase</p>
+    </div>
+
+    <table class="api-table">
+      <thead>
+        <tr>
+          <th>Service</th>
+          <th>Purpose</th>
+          <th>Used By</th>
+          <th>Cost</th>
+          <th>Priority</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Maritime</strong></td>
+          <td>Agent orchestration platform</td>
+          <td>All Claws</td>
+          <td>Free/$20</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>Telegram Bot API</strong></td>
+          <td>User interface + message bus</td>
+          <td>Comms Claw</td>
+          <td>Free</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>Playwright</strong></td>
+          <td>Browser automation (scraping + checkout)</td>
+          <td>Scraper, Buyer</td>
+          <td>Free (OSS)</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>ScraperAPI</strong></td>
+          <td>Proxy rotation + anti-bot</td>
+          <td>Scraper</td>
+          <td>Free/49</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>Cloudflare R2</strong></td>
+          <td>Screenshot + photo storage</td>
+          <td>Scraper, Seller</td>
+          <td>Free (10GB)</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>SQLite</strong></td>
+          <td>Inventory database (MVP)</td>
+          <td>Buyer, Seller</td>
+          <td>Free</td>
+          <td class="priority-mvp">MVP</td>
+        </tr>
+        <tr>
+          <td><strong>Stripe</strong></td>
+          <td>Payment processing for purchases</td>
+          <td>Buyer</td>
+          <td>2.9% + $0.30</td>
+          <td class="priority-p2">Phase 2</td>
+        </tr>
+        <tr>
+          <td><strong>PrimeLister</strong></td>
+          <td>Poshmark listing automation</td>
+          <td>Seller</td>
+          <td>~$30/mo</td>
+          <td class="priority-p2">Phase 2</td>
+        </tr>
+        <tr>
+          <td><strong>2Captcha</strong></td>
+          <td>CAPTCHA solving fallback</td>
+          <td>Scraper</td>
+          <td>~$3/1K</td>
+          <td class="priority-p2">Phase 2</td>
+        </tr>
+        <tr>
+          <td><strong>Supabase</strong></td>
+          <td>Hosted DB + API + storage (replaces SQLite)</td>
+          <td>All</td>
+          <td>Free (500MB)</td>
+          <td class="priority-p2">Phase 2</td>
+        </tr>
+        <tr>
+          <td><strong>Redis / Upstash</strong></td>
+          <td>Fast message queue (if Telegram too slow)</td>
+          <td>Comms</td>
+          <td>Free</td>
+          <td class="priority-p3">Phase 3</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="cost-grid">
+      <div class="cost-card" style="border-top: 3px solid #00cec9;">
+        <div class="phase-label" style="color: #00cec9;">MVP (Today)</div>
+        <div class="amount" style="color: #00cec9;">$0-69</div>
+        <div class="period">/month</div>
+      </div>
+      <div class="cost-card" style="border-top: 3px solid #fdcb6e;">
+        <div class="phase-label" style="color: #fdcb6e;">Phase 2</div>
+        <div class="amount" style="color: #fdcb6e;">~$100</div>
+        <div class="period">/month + tx fees</div>
+      </div>
+      <div class="cost-card" style="border-top: 3px solid #e17055;">
+        <div class="phase-label" style="color: #e17055;">Phase 3 (Scale)</div>
+        <div class="amount" style="color: #e17055;">~$200</div>
+        <div class="period">/month + tx fees</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <h3 style="font-size: 1rem; margin-bottom: 16px;">API Keys Checklist</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px;">
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">MARITIME_API_KEY</div>
+            <div style="font-size: 0.75rem; color: #64748b;">From Maritime dashboard</div>
+          </div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">TELEGRAM_BOT_TOKEN</div>
+            <div style="font-size: 0.75rem; color: #64748b;">Via @BotFather</div>
+          </div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">TELEGRAM_CHAT_ID</div>
+            <div style="font-size: 0.75rem; color: #64748b;">After creating group</div>
+          </div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">SCRAPER_API_KEY</div>
+            <div style="font-size: 0.75rem; color: #64748b;">scraperapi.com signup</div>
+          </div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">R2_ACCESS_KEY / R2_SECRET</div>
+            <div style="font-size: 0.75rem; color: #64748b;">Cloudflare dashboard</div>
+          </div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 10px; padding: 14px; display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 1.2rem;">⬜</span>
+          <div>
+            <div style="font-weight: 600; font-size: 0.85rem;">STRIPE_SECRET_KEY</div>
+            <div style="font-size: 0.75rem; color: #64748b;">Phase 2 — Stripe dashboard</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEMO SECTION -->
+  <div id="demo" class="section">
+    <div class="section-header">
+      <h2>Demo Script</h2>
+      <p>Walk-through for the hackathon presentation — showing the full MVP pipeline</p>
+    </div>
+
+    <div class="demo-box">
+      <h3 style="font-size: 1.1rem; margin-bottom: 20px;">Live Demo Flow (3-5 minutes)</h3>
+
+      <div class="demo-step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>User sends item list via Telegram:</strong> "Hey Research Claw, here are 5 items I want you to track:" followed by 5 URLs (Nike Dunk Low, Supreme tee, ALD 550, etc.)</div>
+      </div>
+      <div class="demo-step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Research Claw validates and responds:</strong> "Validated 5 items. 1 eBay link replaced with Grailed alternative. Colors and sizes confirmed. Handing off to Scraper..."</div>
+      </div>
+      <div class="demo-step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Scraper Claw runs checks:</strong> Show the real-time status as it checks each site — "Checking nike.com... ✅ Available, $120" with screenshots appearing in Telegram</div>
+      </div>
+      <div class="demo-step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Alert fires:</strong> "🚨 Nike Dunk Low is now AVAILABLE! Price: $120 (within budget). Screenshot attached." — show the actual screenshot in Telegram</div>
+      </div>
+      <div class="demo-step">
+        <div class="step-num">5</div>
+        <div class="step-text"><strong>User issues command:</strong> Type <code>/approve 1,2</code> in Telegram — Comms Claw routes to Buyer Claw (explain this is Phase 2, but the command routing works)</div>
+      </div>
+      <div class="demo-step">
+        <div class="step-num">6</div>
+        <div class="step-text"><strong>Show the report:</strong> Type <code>/report</code> — get a formatted summary of all items tracked, available count, prices, and total estimated profit potential</div>
+      </div>
+    </div>
+
+    <div style="margin-top: 32px;">
+      <h3 style="font-size: 1.1rem; margin-bottom: 16px;">Key Talking Points</h3>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #a29bfe;">Why Claws (Multi-Agent)?</div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">Each claw is specialized — the scraper doesn't need to know about pricing strategy, the seller doesn't need to know about anti-bot techniques. Separation of concerns at the AI level.</div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #a29bfe;">Why Telegram as Message Bus?</div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">It's both the human interface AND the inter-agent protocol. You can watch the claws "talk" to each other in real-time. Plus it's free and everyone already has it.</div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #a29bfe;">Hard Problem: Bot Detection</div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">Many fashion sites block scrapers aggressively. Our approach: residential proxy rotation + Playwright stealth + screenshot proof (which also verifies the scraper actually visited the page).</div>
+        </div>
+        <div style="background: #12121a; border: 1px solid #1e1e2e; border-radius: 12px; padding: 20px;">
+          <div style="font-weight: 600; margin-bottom: 8px; color: #a29bfe;">Revenue Model</div>
+          <div style="font-size: 0.85rem; color: #94a3b8;">Buy items at retail (or below retail on resale platforms), sell at markup on Poshmark. The automation reduces the time overhead from hours to minutes per item, making smaller margins viable at scale.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,59 @@
+{
+  "contact": {
+    "email": "",
+    "phone": ""
+  },
+  "shipping_address": {
+    "full_name": "",
+    "line1": "",
+    "line2": "",
+    "city": "",
+    "state": "",
+    "postal_code": "",
+    "country": "US"
+  },
+  "billing_address": {
+    "same_as_shipping": true,
+    "full_name": "",
+    "line1": "",
+    "line2": "",
+    "city": "",
+    "state": "",
+    "postal_code": "",
+    "country": "US"
+  },
+  "payment": {
+    "mode": "saved_wallet_or_manual_confirmation",
+    "saved_payment_label": "",
+    "saved_payment_last4": "",
+    "payment_profile_id": "",
+    "manual_payment_required": true,
+    "raw_card_storage": "not_supported"
+  },
+  "purchase_controls": {
+    "require_confirmation_before_purchase": true,
+    "allow_auto_submit_order": false,
+    "checkout_target": "final_review_before_place_order",
+    "payment_entry": "manual_or_saved_wallet_only",
+    "max_item_price_usd": null,
+    "max_order_total_usd": null
+  },
+  "site_accounts": [
+    {
+      "vendor": "LEGO",
+      "login_email": "",
+      "password_storage": "browser_profile_or_password_manager"
+    },
+    {
+      "vendor": "Topologie",
+      "login_email": "",
+      "password_storage": "browser_profile_or_password_manager"
+    },
+    {
+      "vendor": "Coach",
+      "login_email": "",
+      "password_storage": "browser_profile_or_password_manager"
+    }
+  ],
+  "notes": "Do not store full credit card numbers, CVV codes, or account passwords in this file."
+}

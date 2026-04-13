@@ -1,0 +1,4 @@
+Parse error on line 1:
+---title: Research 
+^
+Expecting 'NEWLINE', 'SPACE', 'GRAPH', got 'LINK'

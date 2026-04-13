@@ -76,23 +76,15 @@ fashionbot/
 │       ├── lego.py                    ← LEGO.com parser
 │       └── generic.py                 ← Fallback HTML signal parser
 │
-├── maritime/                          ← OpenClaw agent configuration
+├── fashion-resale-claws/              ← Maritime/OpenClaw agent pipeline (self-contained)
+│   ├── README.md                      ← Maritime setup + deployment guide
 │   ├── DEMO-WALKTHROUGH.md            ← Step-by-step demo with copy-paste prompts
-│   ├── workspace-files/               ← Agent personality + procedures
-│   │   ├── research-claw/
-│   │   │   ├── SOUL.md                ← Identity + personality
-│   │   │   └── AGENTS.md              ← Operating procedures + Redis handoff
-│   │   ├── scraper-claw/
-│   │   │   ├── SOUL.md
-│   │   │   └── AGENTS.md              ← Scraping procedures + Shopify .json trick
-│   │   └── communication-claw/
-│   │       ├── SOUL.md
-│   │       └── AGENTS.md              ← Message routing + Redis polling
-│   └── diagrams/
-│       ├── architecture-figma.png     ← Visual architecture diagram
-│       └── system-architecture.mermaid
-│
-├── diagrams/                          ← Architecture diagrams (Mermaid + SVG + HTML + PNG)
+│   ├── workspace-files/               ← Agent personality + procedures (paste into OpenClaw)
+│   │   ├── research-claw/             ← SOUL.md + AGENTS.md (validates, writes Redis)
+│   │   ├── scraper-claw/              ← SOUL.md + AGENTS.md (Shopify .json, ScraperAPI)
+│   │   └── communication-claw/        ← SOUL.md + AGENTS.md (polls Redis, Telegram alerts)
+│   ├── diagrams/                      ← Architecture visuals (SVG, HTML, PNG, Mermaid)
+│   └── phase2-specs/                  ← Buyer + Seller claw designs (not yet built)
 ├── docs/                              ← Technical documentation
 │   ├── PRODUCT_PRD.md
 │   ├── TECHNICAL_PRD.md

@@ -19,3 +19,6 @@ screenshots/
 
 # Generated public dashboard artifact
 docs/index.html
+
+# macOS
+.DS_Store
